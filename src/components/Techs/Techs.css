@@ -1,0 +1,128 @@
+.techs {
+  background-color: #272727;
+  padding: 101px 0;
+}
+
+.techs__info {
+  margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.techs__info-title {
+  margin: 0;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -2px;
+}
+
+.techs__info-text {
+  margin: 26px 0 100px;
+  max-width: 460px;
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.56px;
+}
+
+.techs__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.techs__list-item {
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #303030;
+  width: 90px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.56px;
+}
+
+@media all and (max-width: 768px) {
+  .techs {
+    padding: 90px 0 91px;
+  }
+
+  .techs__container {
+    padding: 0 50px;
+  }
+
+  .techs__info {
+    margin-top: 80px;
+  }
+
+  .techs__info-text {
+    margin: 22px 0 83px;
+
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.48px;
+  }
+
+  .techs__list-item {
+    width: 84px;
+    height: 57px;
+
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}
+
+@media all and (max-width: 410px) {
+  .techs {
+    padding: 55px 0 70px;
+    background-color: #202020;
+  }
+
+  .techs__container {
+    padding: 0 18px;
+  }
+
+  .techs__header {
+    border-bottom: 1px solid #000;
+  }
+
+  .main-template__title {
+    margin-bottom: 28px;
+  }
+
+  .techs__info {
+    margin-top: 60px;
+  }
+
+  .techs__info-title {
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
+  }
+
+  .techs__info-text {
+    margin: 24px 0 50px;
+
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: -0.44px;
+  }
+
+  .techs__list {
+    max-width: 180px;
+    justify-content: unset;
+  }
+}

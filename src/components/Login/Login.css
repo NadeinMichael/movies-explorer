@@ -1,0 +1,10 @@
+.login__button-container {
+  margin-top: 197px;
+  width: 100%;
+}
+
+@media all and (max-width: 400px) {
+  .login__button-container {
+    margin-top: 285px;
+  }
+}

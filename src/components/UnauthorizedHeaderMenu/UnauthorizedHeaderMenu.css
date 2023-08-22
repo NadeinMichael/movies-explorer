@@ -1,0 +1,36 @@
+.header__auth-list {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.header__auth-item {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.header__auth-item_accent {
+  padding: 8px 20px;
+  border-radius: 3px;
+  background: #3ddc84;
+}
+
+.header__menu-link_accent {
+  color: #000;
+}
+
+@media all and (max-width: 320px) {
+  .header__auth-list {
+    gap: 14px;
+  }
+
+  .header__auth-item {
+    font-size: 10px;
+  }
+
+  .header__auth-item_accent {
+    padding: 5px 12px;
+  }
+}

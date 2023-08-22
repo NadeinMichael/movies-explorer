@@ -1,0 +1,14 @@
+.app {
+  font-family: Inter;
+  font-style: normal;
+  color: #fff;
+
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background-color: #202020;
+}
+
+.open-menu {
+  overflow-y: hidden;
+}
