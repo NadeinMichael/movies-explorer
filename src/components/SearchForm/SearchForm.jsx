@@ -9,6 +9,7 @@ const SearchForm = () => {
             className="search-form__input"
             type="text"
             placeholder="Фильм"
+            required
           />
           <button className="search-form__button button" type="submit">
             Поиск

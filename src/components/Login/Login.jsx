@@ -24,6 +24,7 @@ const Login = () => {
             id="email"
             name="email"
             type="email"
+            placeholder="example@gmail.com"
             required
           />
           <span className="login__error form__error"></span>
@@ -35,6 +36,7 @@ const Login = () => {
             id="password"
             name="password"
             type="password"
+            placeholder="Пароль"
             required
           />
           <span className="login__error form__error"></span>

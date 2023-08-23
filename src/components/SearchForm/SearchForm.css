@@ -10,6 +10,10 @@
   border-radius: 8px;
 }
 
+.search-form__form:focus-within {
+  border: 1.5px solid #4285f4;
+}
+
 .search-form__input {
   width: 100%;
   height: 48px;

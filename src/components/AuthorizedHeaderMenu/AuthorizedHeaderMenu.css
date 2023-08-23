@@ -40,7 +40,7 @@
 
 @media all and (max-width: 768px) {
   .header__list {
-    overflow: auto;
+    overflow: hidden;
     position: absolute;
     z-index: 2;
     top: 0px;

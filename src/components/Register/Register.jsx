@@ -24,6 +24,7 @@ const Register = () => {
             id="name"
             name="name"
             type="text"
+            placeholder="Иван"
             required
           />
           <span className="register__error form__error"></span>
@@ -35,6 +36,7 @@ const Register = () => {
             id="email"
             name="email"
             type="email"
+            placeholder="example@gmail.com"
             required
           />
           <span className="register__error form__error"></span>
@@ -46,6 +48,7 @@ const Register = () => {
             id="password"
             name="password"
             type="password"
+            placeholder="Пароль"
             required
           />
           <span className="register__error form__error"></span>
