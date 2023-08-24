@@ -1,0 +1,6 @@
+.saved-movies {
+  background-color: #202020;
+  height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}

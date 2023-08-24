@@ -1,0 +1,138 @@
+.about-project {
+  padding: 110px 0 100px;
+}
+
+.about-project__info {
+  margin: 69px 0 110px;
+  display: flex;
+  flex-direction: row;
+  gap: 52px;
+}
+
+.about-project__info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.about-project__info-title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.8px;
+}
+
+.about-project__info-text {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.about-project__progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-project__progress-column {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.about-project__progress-text {
+  margin: 0;
+
+  text-align: center;
+  padding: 9px 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.about-project__progress-column_bottom {
+  color: #8b8b8b;
+}
+
+.about-project__progress-column_accent {
+  background-color: #303030;
+}
+
+.about-project__progress-text_accent {
+  color: #000;
+  background-color: #3ddc84;
+}
+
+@media all and (max-width: 768px) {
+  .about-project {
+    padding: 90px 0 81px;
+  }
+
+  .about-project__container {
+    padding: 0 50px;
+  }
+
+  .about-project__info {
+    margin: 69px 0 93px;
+    gap: 39px;
+  }
+
+  .about-project__info-column {
+    gap: 22px;
+  }
+
+  .about-project__info-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__progress-column {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media all and (max-width: 350px) {
+  .about-project {
+    padding: 70px 0;
+  }
+
+  .about-project__container {
+    padding: 0 18px;
+  }
+
+  .about-project__info {
+    margin: 60px 0;
+    flex-direction: column;
+    gap: 58px;
+  }
+
+  .about-project__info-column {
+    gap: 16px;
+  }
+
+  .about-project__info-title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  .about-project__info-text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__progress {
+    gap: 0;
+  }
+
+  .about-project__progress-column {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .about-project__progress-text {
+    padding: 11px 0;
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,27 @@
+.main {
+  background-color: #202020;
+}
+
+.main-template__header {
+  border-bottom: 1px solid rgba(218, 218, 218, 1);
+}
+
+.main-template__title {
+  margin: 0 0 23px;
+
+  font-size: 22px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.88px;
+}
+
+@media all and (max-width: 768px) {
+}
+
+@media all and (max-width: 350px) {
+  .main-template__title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    margin-bottom: 25px;
+  }
+}
