@@ -1,6 +1,11 @@
+import { useContext } from 'react';
+
 import './BurgerMenu.css';
 
-const BurgerMenu = ({ isOpen, handleBurgerMenuClick }) => {
+import AppContext from '../../contexts/AppContext';
+
+const BurgerMenu = () => {
+  const { isOpen, handleBurgerMenuClick } = useContext(AppContext);
   return (
     <div
       onClick={handleBurgerMenuClick}

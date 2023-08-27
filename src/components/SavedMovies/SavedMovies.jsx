@@ -7,14 +7,11 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-const SavedMovies = ({ isOpen, handleBurgerMenuClick }) => {
+const SavedMovies = () => {
   return (
     <div className="saved-movies">
       <Header>
-        <AuthorizedHeaderMenu
-          isOpen={isOpen}
-          handleBurgerMenuClick={handleBurgerMenuClick}
-        />
+        <AuthorizedHeaderMenu />
       </Header>
       <SearchForm />
       <MoviesCardList>

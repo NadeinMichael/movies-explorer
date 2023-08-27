@@ -1,10 +1,14 @@
+import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import './AuthorizedHeaderMenu.css';
+
+import AppContext from '../../contexts/AppContext';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
-const AuthorizedHeaderMenu = ({ isOpen, handleBurgerMenuClick }) => {
+const AuthorizedHeaderMenu = () => {
   const location = useLocation();
+  const { isOpen, handleBurgerMenuClick } = useContext(AppContext);
 
   return (
     <>
@@ -63,10 +67,7 @@ const AuthorizedHeaderMenu = ({ isOpen, handleBurgerMenuClick }) => {
           </Link>
         </li>
       </ul>
-      <BurgerMenu
-        isOpen={isOpen}
-        handleBurgerMenuClick={handleBurgerMenuClick}
-      />
+      <BurgerMenu />
       <div
         onClick={handleBurgerMenuClick}
         className={isOpen ? 'overlay' : 'overlay overlay_close'}

@@ -9,6 +9,15 @@
   opacity: 0.8;
 }
 
+.button:disabled {
+  background-color: #f8f8f8;
+  color: #c2c2c2;
+}
+.button:disabled:hover {
+  cursor: unset;
+  opacity: unset;
+}
+
 .link {
   text-decoration: none;
   color: inherit;
