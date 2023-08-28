@@ -8,18 +8,34 @@ import AuthorizedHeaderMenu from '../AuthorizedHeaderMenu/AuthorizedHeaderMenu';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import MoviesCard from '../MoviesCard/MoviesCard';
 
 const Movies = () => {
+  const {
+    isLoading,
+    setIsLoading,
+    rowMovieList,
+    setRowMovieList,
+    filteredMovieList,
+    setFilteredMovieList,
+  } = useContext(AppContext);
   const [searchText, setSearchText] = useState('');
   const [shortFilmsOnly, setShortFilmsOnly] = useState(false);
-  const [rowMovieList, setRowMovieList] = useState([]);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //   }
-  // }, []);
+  useEffect(() => {
+    const queryText = searchText.trim().toLowerCase();
+    if (queryText) {
+      let filteredFilms = rowMovieList.filter(
+        (movie) =>
+          movie.nameRU.toLowerCase().includes(queryText) ||
+          movie.nameEN.toLowerCase().includes(queryText)
+      );
+      if (shortFilmsOnly) {
+        filteredFilms = filteredFilms.filter((movie) => movie.duration <= 40);
+      }
+
+      setFilteredMovieList(filteredFilms);
+    }
+  }, [searchText, rowMovieList]);
 
   return (
     <div className="movies">
@@ -32,22 +48,13 @@ const Movies = () => {
         shortFilmsOnly={shortFilmsOnly}
         setShortFilmsOnly={setShortFilmsOnly}
         setRowMovieList={setRowMovieList}
+        filteredMovieList={filteredMovieList}
+        setFilteredMovieList={setFilteredMovieList}
         rowMovieList={rowMovieList}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
-      <MoviesCardList>
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-      </MoviesCardList>
+      <MoviesCardList searchText={searchText} cards={filteredMovieList} />
       <Footer />
     </div>
   );

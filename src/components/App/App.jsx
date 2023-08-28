@@ -19,6 +19,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [rowMovieList, setRowMovieList] = useState([]); //весь список фильмов от Api
+  const [filteredMovieList, setFilteredMovieList] = useState([]); //отсоритрованный список фильмов по запросу
   const [currentUser, setCurrentUser] = useState({
     name: '',
     email: '',
@@ -78,6 +80,8 @@ function App() {
     checkToken();
   }, []);
 
+  console.log(rowMovieList);
+
   return (
     <AppContext.Provider
       value={{
@@ -86,6 +90,11 @@ function App() {
         setLoggedIn,
         isOpen,
         handleBurgerMenuClick,
+        rowMovieList,
+        setRowMovieList,
+        filteredMovieList,
+        setFilteredMovieList,
+        setIsLoading,
       }}
     >
       <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>

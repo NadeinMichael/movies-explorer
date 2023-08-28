@@ -1,19 +1,24 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 import './MoviesCard.css';
-import cardImg from '../../images/card-img.png';
-
-const MoviesCard = () => {
+import { commonImageUrl } from '../../constants';
+const MoviesCard = ({ card }) => {
   const [isSaved, setIsSaved] = useState(true);
   const location = useLocation();
   return (
     <li className="movie-card">
       <div className="movie-card__info">
-        <h2 className="movie-card__title">В погоне за Бенкси</h2>
-        <p className="movie-card__duration">27 минут</p>
+        <h2 className="movie-card__title">{card.nameRU}</h2>
+        <p className="movie-card__duration">{card.duration}</p>
       </div>
-      <img className="movie-card__img" src={cardImg} alt="изображение фильма" />
+      <Link to={card.trailerLink} target="_blank">
+        <img
+          className="movie-card__img"
+          src={card.image.url ? commonImageUrl + card.image.url : card.image}
+          alt="изображение фильма"
+        />
+      </Link>
       {isSaved ? (
         (location.pathname === '/movies' && (
           <button

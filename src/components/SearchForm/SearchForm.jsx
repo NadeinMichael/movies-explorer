@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 import { getMovies } from '../../utils/MoviesApi';
@@ -9,35 +10,54 @@ const SearchForm = ({
   shortFilmsOnly,
   setShortFilmsOnly,
   setRowMovieList,
+  filteredMovieList,
+  setFilteredMovieList,
   rowMovieList,
+  isLoading,
+  setIsLoading,
 }) => {
+  const location = useLocation();
   const [isEmptyInput, setIsEmptyInput] = useState(false);
 
   const handleInputChange = (event) => {
-    setSearchText(event.target.value);
+    if (location.pathname === '/movies') {
+      setSearchText(event.target.value);
+    }
   };
 
   const togglerShortFilms = () => {
-    setShortFilmsOnly(!shortFilmsOnly);
+    if (location.pathname === '/movies') {
+      setShortFilmsOnly(!shortFilmsOnly);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const getAllMoviesFromApi = (e) => {
     e.preventDefault();
 
-    if (!searchText.trim().length) {
-      setIsEmptyInput(true);
-      setSearchText('');
-      return;
+    if (location.pathname === '/movies') {
+      if (!searchText.trim().length) {
+        setIsEmptyInput(true);
+        setSearchText('');
+        return;
+      } else {
+        setIsLoading(true);
+        setIsEmptyInput(false);
+        getMovies().then((res) => {
+          setRowMovieList(res);
+          setIsLoading(false);
+        });
+      }
     }
-    getMovies().then((res) => setRowMovieList(res));
-    setSearchText('');
-    console.log(1);
   };
 
   return (
     <div className="search-form">
       <div className="search-form__container container">
-        <form className="search-form__form" noValidate onSubmit={handleSubmit}>
+        <form
+          className="search-form__form"
+          noValidate
+          onSubmit={getAllMoviesFromApi}
+        >
           <input
             className="search-form__input"
             type="text"
