@@ -23,9 +23,9 @@ function App() {
     JSON.parse(localStorage.getItem('rowMovies')) || []
   ); //весь список фильмов от Api
   const [filteredMovieList, setFilteredMovieList] = useState([]); //отсоритрованный список фильмов по запросу
-  const [favoriteMoviesList, setFavoriteMoviesList] = useState([]
-  ); // список сохраненных фильмов
+  const [favoriteMoviesList, setFavoriteMoviesList] = useState([]); // список сохраненных фильмов
   const [currentUser, setCurrentUser] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
 
   console.log(favoriteMoviesList);
 
@@ -44,10 +44,14 @@ function App() {
           localStorage.setItem('token', data.token);
           setCurrentUser({ email, name, _id: res._id });
           setLoggedIn(true);
+          setErrorMessage('');
           navigate('/movies');
         });
       })
-      .catch((error) => console.error('handleRegister ', error));
+      .catch((error) => {
+        console.error('handleRegister ', error)
+        setErrorMessage('Неверный логин или пароль');
+    });
   };
 
   const handleLogin = (email, password) => {
@@ -60,27 +64,37 @@ function App() {
           name: data.user.name,
           email: data.user.email,
         });
-        setLoggedIn(true);
+        setErrorMessage('');
+        setLoggedIn(true)
         navigate('/movies');
       })
-      .catch((error) => console.error('handleLogin ', error));
+      .catch((error) => {
+        console.error('handleLogin ', error);
+        setErrorMessage('Неверный логин или пароль');
+      });
   };
 
   const checkToken = () => {
     const token = localStorage.getItem('token');
-    mainApi
-      .checkJwt(token)
-      .then((data) => {
-        if (data) {
-          setCurrentUser({ name: data.name, email: data.email, _id: data._id });
-          setLoggedIn(true);
-          navigate(location.pathname);
-          return;
-        } else {
-          return setLoggedIn(false);
-        }
-      })
-      .catch((err) => console.log('check Token error:', err));
+    if (token) {
+      mainApi
+        .checkJwt(token)
+        .then((data) => {
+          if (data) {
+            setCurrentUser({
+              name: data.name,
+              email: data.email,
+              _id: data._id,
+            });
+            setLoggedIn(true);
+            navigate(location.pathname);
+            return;
+          } else {
+            return setLoggedIn(false);
+          }
+        })
+        .catch((err) => console.log('check Token error:', err));
+    }
   };
 
   useEffect(() => {
@@ -89,16 +103,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    mainApi.getFavoriteMovies().then((res) =>{
-      setFavoriteMoviesList(res)
-    })
-  },[])
+    if (loggedIn) {
+      mainApi.getFavoriteMovies().then((res) => {
+        setFavoriteMoviesList(res);
+      });
+    }
+  }, [loggedIn]);
 
   return (
     <AppContext.Provider
       value={{
         isLoading,
         loggedIn,
+        errorMessage,
         setLoggedIn,
         isOpen,
         handleBurgerMenuClick,

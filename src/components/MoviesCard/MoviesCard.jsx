@@ -12,7 +12,7 @@ const MoviesCard = ({ card }) => {
   const location = useLocation();
 
   const FavoriteCard = favoriteMoviesList?.find(
-    (movie) => movie.movieId === card.id
+    (movie) => movie.movieId === card.id || card._id
   );
 
   useEffect(() => {
@@ -55,12 +55,15 @@ const MoviesCard = ({ card }) => {
 
   const deleteFavoriteMovie = (card) => {
     if (FavoriteCard) {
-      mainApi.deleteFavoriteMovie(card.id).then(() => {
-        const newFavoriteList = favoriteMoviesList.filter(
-          (movie) => movie.movieId !== card.id
-        );
-        setFavoriteMoviesList(newFavoriteList);
-      });
+      mainApi
+        .deleteFavoriteMovie(card.id || card.movieId)
+        .then((deletedCard) => {
+          const newFavoriteList = favoriteMoviesList.filter(
+            (movie) => movie.movieId !== deletedCard.movieId
+          );
+          setFavoriteMoviesList(newFavoriteList);
+        })
+        .catch(console.error);
     }
   };
 
@@ -91,7 +94,10 @@ const MoviesCard = ({ card }) => {
           </button>
         )) ||
         (location.pathname === '/saved-movies' && (
-          <button className="movie-card__button movie-card__button_delete button">
+          <button
+            className="movie-card__button movie-card__button_delete button"
+            onClick={() => deleteFavoriteMovie(card)}
+          >
             ✖
           </button>
         ))

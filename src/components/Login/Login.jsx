@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import './Login.css';
 import logo from '../../images/logo.svg';
+import AppContext from '../../contexts/AppContext';
 
 const Login = ({ handleLogin }) => {
+  const {errorMessage} = useContext(AppContext)
   const {
     register,
     formState: { errors, isValid },
@@ -72,6 +75,7 @@ const Login = ({ handleLogin }) => {
             {errors?.password && (errors?.password?.message || 'error')}
           </span>
           <div className="login__button-container">
+          <p className='login__error-message'>{errorMessage}</p>
             <button
               className="login__button form__button button"
               type="submit"

@@ -13,10 +13,14 @@ import mainApi from '../../utils/MainApi';
 const Profile = () => {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  const { setLoggedIn, setRowMovieList } = useContext(AppContext);
+  const { setLoggedIn, setRowMovieList, setFavoriteMoviesList } =
+    useContext(AppContext);
   const [updatedUser, setUpdatedUser] = useState(currentUser);
-
   const [editMode, setEditMode] = useState(false);
+
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorName, setErrorName] = useState('');
+  const emailPattern = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/;
 
   const exitHandler = () => {
     setLoggedIn(false);
@@ -25,8 +29,10 @@ const Profile = () => {
     setCurrentUser({
       name: '',
       email: '',
-      _id: ''
-    })
+      _id: '',
+    });
+    setFavoriteMoviesList([]);
+
     navigate('/');
   };
 
@@ -42,7 +48,8 @@ const Profile = () => {
       setEditMode(false);
       mainApi
         .editProfile({ ...updatedUser })
-        .then((res) => setCurrentUser({ ...updatedUser }));
+        .then((res) => setCurrentUser({ ...updatedUser }))
+        .catch((err) => console.log(err));
     } else {
       setEditMode(false);
     }
@@ -51,9 +58,19 @@ const Profile = () => {
   const handlerInputChange = (newInputValue, inputId) => {
     switch (inputId) {
       case 'currentUser.name':
+        if (newInputValue.length === 0) {
+          setErrorName('Поле имени не может быть пустым');
+          break;
+        }
+        setErrorName('');
         setUpdatedUser({ ...updatedUser, name: newInputValue });
         break;
       case 'currentUser.email':
+        if (!emailPattern.test(newInputValue) || newInputValue.length === 0) {
+          setErrorEmail('Введен некорректный email');
+          break;
+        }
+        setErrorEmail('');
         setUpdatedUser({ ...updatedUser, email: newInputValue });
         break;
       default:
@@ -76,8 +93,10 @@ const Profile = () => {
               title={updatedUser.name}
               handlerInputChange={handlerInputChange}
               inputId="currentUser.name"
+              type="text"
             />
           </li>
+          {errorName && <span className="profile__error">{errorName}</span>}
           <li className="profile__info-item">
             <span className="profile__info-title">E-mail</span>
             <EditableSpan
@@ -85,8 +104,10 @@ const Profile = () => {
               title={updatedUser.email}
               handlerInputChange={handlerInputChange}
               inputId="currentUser.email"
+              type="email"
             />
           </li>
+          {errorEmail && <span className="profile__error">{errorEmail}</span>}
         </ul>
         <div className="profile__buttons">
           {!editMode ? (

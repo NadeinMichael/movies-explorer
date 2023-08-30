@@ -21,11 +21,8 @@ const Movies = () => {
   const [searchText, setSearchText] = useState(
     localStorage.getItem('searchText') || ''
   );
-  const shortFilmsOnlyFromStore = JSON.parse(
-    localStorage.getItem('shortFilmsOnly')
-  );
   const [shortFilmsOnly, setShortFilmsOnly] = useState(
-    shortFilmsOnlyFromStore || false
+    JSON.parse(localStorage.getItem('shortFilmsOnly')) || false
   );
   const filteredMoviesFromStore =
     JSON.parse(localStorage.getItem('filteredMovies')) || [];

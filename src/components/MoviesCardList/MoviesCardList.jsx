@@ -12,11 +12,7 @@ const MD_INITIAL_CARD_COUNT = 8;
 const SM_INITIAL_CARD_COUNT = 5;
 
 const MoviesCardList = ({ searchText, cards }) => {
-  const {
-    isLoading,
-    rowMovieList,
-    filteredMovieList,
-  } = useContext(AppContext);
+  const { isLoading, rowMovieList, filteredMovieList } = useContext(AppContext);
   const location = useLocation();
 
   const isDesktop = useMediaQuery('(min-width: 1280px)');
@@ -50,19 +46,16 @@ const MoviesCardList = ({ searchText, cards }) => {
     <div className="movie-card-list">
       <div className="movie-card-list__container container">
         {isLoading && <Loader />}
-        {rowMovieList.length === 0 ? (
+        {location.pathname === '/movies' && rowMovieList.length === 0 ? (
           <p className="movie-card-list__message">Найдите свой фильм</p>
-        ) : filteredMovieList.length === 0 && searchText.trim().length ? (
+        ) : filteredMovieList.length === 0 && searchText?.trim().length ? (
           <p className="movie-card-list__message">
             По данному запросу ничего не найдено
           </p>
         ) : (
           <ul className="movie-card-list__cards">
             {cards?.slice(0, visibleCardCount).map((card) => (
-              <MoviesCard
-                card={card}
-                key={card.id}
-              />
+              <MoviesCard card={card} key={card.id || card._id} />
             ))}
           </ul>
         )}
@@ -76,12 +69,7 @@ const MoviesCardList = ({ searchText, cards }) => {
         >
           {cards.length > visibleCardCount ? (
             <button
-              className={
-                (location.pathname === '/movies' &&
-                  'movie-card-list__button button') ||
-                (location.pathname === '/saved-movies' &&
-                  'movie-card-list__button_saved-page button')
-              }
+              className="movie-card-list__button button"
               onClick={handleClick}
             >
               Ещё

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import './EditableSpan.css';
 
-const EditableSpan = ({ editMode, title, handlerInputChange, inputId }) => {
+const EditableSpan = ({ editMode, title, handlerInputChange, inputId, type }) => {
   const [inputValue, setInputValue] = useState(title);
 
   const onChangeTitleHandler = (e) => {
@@ -16,7 +16,8 @@ const EditableSpan = ({ editMode, title, handlerInputChange, inputId }) => {
   return editMode ? (
     <input
       className="editable-input"
-      type="text"
+      type={type}
+      required
       autoFocus
       value={inputValue}
       onChange={onChangeTitleHandler}

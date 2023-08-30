@@ -41,10 +41,6 @@
   line-height: normal;
 }
 
-.movie-card-list__button_saved-page {
-  display: none;
-}
-
 @media all and (max-width: 1165px) {
   .movie-card-list__container {
     padding: 0 30px;

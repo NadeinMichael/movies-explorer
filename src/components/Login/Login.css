@@ -1,10 +1,22 @@
 .login__button-container {
-  margin-top: 197px;
+  margin-top: 147px;
   width: 100%;
+}
+
+.login__error-message {
+  margin: 10px 0;
+  height: 30px;
+  text-align: center;
+
+  color: #ee3465;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 @media all and (max-width: 400px) {
   .login__button-container {
-    margin-top: 285px;
+    margin-top: 235px;
   }
 }
