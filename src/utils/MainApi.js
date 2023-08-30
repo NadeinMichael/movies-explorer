@@ -84,7 +84,7 @@ class Api {
 }
 
 const mainApi = new Api({
-  baseUrl: `http://tolmachev.diploma.nomoreparties.sbs/api`,
+  baseUrl: `https://tolmachev.diploma.nomoreparties.sbs/api`,
   headers: {
     authorization: localStorage.getItem('token'),
     'Content-Type': 'application/json',
