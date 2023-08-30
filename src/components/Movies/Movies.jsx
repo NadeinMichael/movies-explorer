@@ -18,8 +18,17 @@ const Movies = () => {
     filteredMovieList,
     setFilteredMovieList,
   } = useContext(AppContext);
-  const [searchText, setSearchText] = useState('');
-  const [shortFilmsOnly, setShortFilmsOnly] = useState(false);
+  const [searchText, setSearchText] = useState(
+    localStorage.getItem('searchText') || ''
+  );
+  const shortFilmsOnlyFromStore = JSON.parse(
+    localStorage.getItem('shortFilmsOnly')
+  );
+  const [shortFilmsOnly, setShortFilmsOnly] = useState(
+    shortFilmsOnlyFromStore || false
+  );
+  const filteredMoviesFromStore =
+    JSON.parse(localStorage.getItem('filteredMovies')) || [];
 
   useEffect(() => {
     const queryText = searchText.trim().toLowerCase();
@@ -34,8 +43,10 @@ const Movies = () => {
       }
 
       setFilteredMovieList(filteredFilms);
+      localStorage.setItem('filteredMovies', JSON.stringify(filteredFilms));
     }
-  }, [searchText, rowMovieList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shortFilmsOnly, rowMovieList]);
 
   return (
     <div className="movies">
@@ -54,7 +65,7 @@ const Movies = () => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
-      <MoviesCardList searchText={searchText} cards={filteredMovieList} />
+      <MoviesCardList searchText={searchText} cards={filteredMoviesFromStore} />
       <Footer />
     </div>
   );

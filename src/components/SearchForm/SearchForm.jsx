@@ -25,9 +25,10 @@ const SearchForm = ({
     }
   };
 
-  const togglerShortFilms = () => {
+  const togglerShortFilms = (e) => {
     if (location.pathname === '/movies') {
-      setShortFilmsOnly(!shortFilmsOnly);
+      setShortFilmsOnly(e.target.checked);
+      localStorage.setItem('shortFilmsOnly', e.target.checked);
     }
   };
 
@@ -42,10 +43,17 @@ const SearchForm = ({
       } else {
         setIsLoading(true);
         setIsEmptyInput(false);
-        getMovies().then((res) => {
-          setRowMovieList(res);
-          setIsLoading(false);
-        });
+        getMovies()
+          .then((res) => {
+            localStorage.setItem('rowMovies', JSON.stringify(res));
+            setRowMovieList(res);
+            localStorage.setItem('searchText', searchText);
+          })
+          .catch((err) => {
+            alert('Произошла ошибка на сервере, повторите запрос');
+            console.log(err);
+          })
+          .finally(() => setIsLoading(false));
       }
     }
   };
@@ -78,7 +86,8 @@ const SearchForm = ({
             <input
               className="search-form__checkbox "
               type="checkbox"
-              onClick={togglerShortFilms}
+              onChange={togglerShortFilms}
+              checked={location.pathname === '/movies' ? shortFilmsOnly : false}
             />
             <span className="search-form__text">Короткометражки</span>
           </label>

@@ -36,6 +36,14 @@
   height: 200px;
 }
 
+.movie-card__img-link {
+  transition: all 0.5s ease;
+}
+
+.movie-card__img-link:hover {
+  transform: scale(1.05);
+}
+
 .movie-card__button {
   font-size: 12px;
   font-weight: 400;

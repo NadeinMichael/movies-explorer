@@ -19,12 +19,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [rowMovieList, setRowMovieList] = useState([]); //весь список фильмов от Api
+  const [rowMovieList, setRowMovieList] = useState(
+    JSON.parse(localStorage.getItem('rowMovies')) || []
+  ); //весь список фильмов от Api
   const [filteredMovieList, setFilteredMovieList] = useState([]); //отсоритрованный список фильмов по запросу
-  const [currentUser, setCurrentUser] = useState({
-    name: '',
-    email: '',
-  });
+  const [favoriteMoviesList, setFavoriteMoviesList] = useState([]
+  ); // список сохраненных фильмов
+  const [currentUser, setCurrentUser] = useState({});
+
+  console.log(favoriteMoviesList);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,10 +39,10 @@ function App() {
   const handleRegister = (name, email, password) => {
     mainApi
       .register(name, email, password)
-      .then(() => {
+      .then((res) => {
         mainApi.authorize(email, password).then((data) => {
           localStorage.setItem('token', data.token);
-          setCurrentUser({ email, name });
+          setCurrentUser({ email, name, _id: res._id });
           setLoggedIn(true);
           navigate('/movies');
         });
@@ -53,6 +56,7 @@ function App() {
       .then((data) => {
         localStorage.setItem('token', data.token);
         setCurrentUser({
+          ...currentUser,
           name: data.user.name,
           email: data.user.email,
         });
@@ -64,23 +68,31 @@ function App() {
 
   const checkToken = () => {
     const token = localStorage.getItem('token');
-    mainApi.checkJwt(token).then((data) => {
-      if (data) {
-        setCurrentUser({ name: data.name, email: data.email });
-        setLoggedIn(true);
-        navigate(location.pathname);
-        return;
-      } else {
-        return setLoggedIn(false);
-      }
-    });
+    mainApi
+      .checkJwt(token)
+      .then((data) => {
+        if (data) {
+          setCurrentUser({ name: data.name, email: data.email, _id: data._id });
+          setLoggedIn(true);
+          navigate(location.pathname);
+          return;
+        } else {
+          return setLoggedIn(false);
+        }
+      })
+      .catch((err) => console.log('check Token error:', err));
   };
 
   useEffect(() => {
     checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(rowMovieList);
+  useEffect(() => {
+    mainApi.getFavoriteMovies().then((res) =>{
+      setFavoriteMoviesList(res)
+    })
+  },[])
 
   return (
     <AppContext.Provider
@@ -95,6 +107,8 @@ function App() {
         filteredMovieList,
         setFilteredMovieList,
         setIsLoading,
+        favoriteMoviesList,
+        setFavoriteMoviesList,
       }}
     >
       <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>

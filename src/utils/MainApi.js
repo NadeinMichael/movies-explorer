@@ -59,6 +59,28 @@ class Api {
       }),
     });
   }
+
+  getFavoriteMovies() {
+    return this._request('/movies', {
+      method: 'GET',
+      headers: this._headers,
+    });
+  }
+
+  addFavoriteMovie(movie) {
+    return this._request('/movies', {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(movie),
+    });
+  }
+
+  deleteFavoriteMovie(movieId) {
+    return this._request(`/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    });
+  }
 }
 
 const mainApi = new Api({

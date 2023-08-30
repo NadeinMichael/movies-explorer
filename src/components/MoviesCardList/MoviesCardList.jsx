@@ -7,26 +7,20 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Loader from '../Loader/Loader';
 import { useMediaQuery } from '../../hooks/useMediaQuerry';
 
-const LG_ROW_CARD_COUNT = 4;
-const MD_ROW_CARD_COUNT = 3;
-const SM_ROW_CARD_COUNT = 2;
-
 const LG_INITIAL_CARD_COUNT = 12;
-const MD_INITIAL_CARD_COUNT = 9;
-const SM_INITIAL_CARD_COUNT = 6;
+const MD_INITIAL_CARD_COUNT = 8;
+const SM_INITIAL_CARD_COUNT = 5;
 
 const MoviesCardList = ({ searchText, cards }) => {
-  const { isLoading, rowMovieList, filteredMovieList } = useContext(AppContext);
+  const {
+    isLoading,
+    rowMovieList,
+    filteredMovieList,
+  } = useContext(AppContext);
   const location = useLocation();
 
   const isDesktop = useMediaQuery('(min-width: 1280px)');
   const isTablet = useMediaQuery('(min-width: 768px)');
-
-  const cardColumnCount = isDesktop
-    ? LG_ROW_CARD_COUNT
-    : isTablet
-    ? MD_ROW_CARD_COUNT
-    : SM_ROW_CARD_COUNT;
 
   const initialCardCount = isDesktop
     ? LG_INITIAL_CARD_COUNT
@@ -36,23 +30,20 @@ const MoviesCardList = ({ searchText, cards }) => {
 
   const [visibleCardCount, setVisibleCardCount] = useState(initialCardCount);
 
-  const roundedVisibleCardCount =
-    Math.floor(visibleCardCount / cardColumnCount) * cardColumnCount;
-
   const handleClick = () => {
     calculateCardCount();
   };
 
   const calculateCardCount = () => {
     if (isDesktop) {
-      return setVisibleCardCount(visibleCardCount + LG_ROW_CARD_COUNT);
+      return setVisibleCardCount(visibleCardCount + 3);
     }
 
     if (isTablet) {
-      return setVisibleCardCount(visibleCardCount + MD_ROW_CARD_COUNT);
+      return setVisibleCardCount(visibleCardCount + 2);
     }
 
-    setVisibleCardCount(visibleCardCount + SM_ROW_CARD_COUNT);
+    setVisibleCardCount(visibleCardCount + 2);
   };
 
   return (
@@ -67,8 +58,11 @@ const MoviesCardList = ({ searchText, cards }) => {
           </p>
         ) : (
           <ul className="movie-card-list__cards">
-            {cards?.slice(0, roundedVisibleCardCount).map((card) => (
-              <MoviesCard card={card} key={card.id} />
+            {cards?.slice(0, visibleCardCount).map((card) => (
+              <MoviesCard
+                card={card}
+                key={card.id}
+              />
             ))}
           </ul>
         )}
@@ -80,15 +74,19 @@ const MoviesCardList = ({ searchText, cards }) => {
               'movie-card-list__button-container movie-card-list__button-container_saved-page')
           }
         >
-          <button
-            className={
-              (location.pathname === '/movies' && 'movie-card-list__button') ||
-              (location.pathname === '/saved-movies' &&
-                'movie-card-list__button_saved-page')
-            }
-          >
-            Ещё
-          </button>
+          {cards.length > visibleCardCount ? (
+            <button
+              className={
+                (location.pathname === '/movies' &&
+                  'movie-card-list__button button') ||
+                (location.pathname === '/saved-movies' &&
+                  'movie-card-list__button_saved-page button')
+              }
+              onClick={handleClick}
+            >
+              Ещё
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

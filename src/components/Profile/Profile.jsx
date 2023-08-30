@@ -13,14 +13,20 @@ import mainApi from '../../utils/MainApi';
 const Profile = () => {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  const { setLoggedIn } = useContext(AppContext);
+  const { setLoggedIn, setRowMovieList } = useContext(AppContext);
   const [updatedUser, setUpdatedUser] = useState(currentUser);
 
   const [editMode, setEditMode] = useState(false);
 
   const exitHandler = () => {
     setLoggedIn(false);
-    localStorage.removeItem('token');
+    localStorage.clear();
+    setRowMovieList([]);
+    setCurrentUser({
+      name: '',
+      email: '',
+      _id: ''
+    })
     navigate('/');
   };
 
