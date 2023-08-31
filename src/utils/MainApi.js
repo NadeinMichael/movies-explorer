@@ -83,12 +83,10 @@ class Api {
   }
 }
 
-const token = localStorage.getItem('token');
-
 const mainApi = new Api({
   baseUrl: `https://tolmachev.diploma.nomoreparties.sbs/api`,
   headers: {
-    authorization: token,
+    authorization: localStorage.getItem('token'),
     'Content-Type': 'application/json',
   },
 });
