@@ -1,5 +1,3 @@
-let authToken;
-
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -11,6 +9,14 @@ class Api {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  _setToken() {
+    const token = localStorage.getItem('token');
+    return {
+      authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
   }
 
   async _request(endpoint, options) {
@@ -41,7 +47,6 @@ class Api {
   }
 
   checkJwt(token) {
-    authToken = token;
     return this._request('/users/me', {
       method: 'GET',
       headers: {
@@ -55,7 +60,7 @@ class Api {
   editProfile({ name, email }) {
     return this._request('/users/me', {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this._setToken(),
       body: JSON.stringify({
         name,
         email,
@@ -66,14 +71,14 @@ class Api {
   getFavoriteMovies() {
     return this._request('/movies', {
       method: 'GET',
-      headers: this._headers,
+      headers: this._setToken(),
     });
   }
 
   addFavoriteMovie(movie) {
     return this._request('/movies', {
       method: 'POST',
-      headers: this._headers,
+      headers: this._setToken(),
       body: JSON.stringify(movie),
     });
   }
@@ -81,17 +86,13 @@ class Api {
   deleteFavoriteMovie(movieId) {
     return this._request(`/movies/${movieId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this._setToken(),
     });
   }
 }
 
 const mainApi = new Api({
   baseUrl: `https://tolmachev.diploma.nomoreparties.sbs/api`,
-  headers: {
-    authorization: localStorage.getItem('token') || authToken,
-    'Content-Type': 'application/json',
-  },
 });
 
 export default mainApi;
