@@ -1,3 +1,5 @@
+let authToken;
+
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -39,6 +41,7 @@ class Api {
   }
 
   checkJwt(token) {
+    authToken = token;
     return this._request('/users/me', {
       method: 'GET',
       headers: {
@@ -86,7 +89,7 @@ class Api {
 const mainApi = new Api({
   baseUrl: `https://tolmachev.diploma.nomoreparties.sbs/api`,
   headers: {
-    authorization: localStorage.getItem('token'),
+    authorization: localStorage.getItem('token') || authToken,
     'Content-Type': 'application/json',
   },
 });
