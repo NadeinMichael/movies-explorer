@@ -43,15 +43,15 @@ function App() {
         mainApi.authorize(email, password).then((data) => {
           localStorage.setItem('token', data.token);
           setCurrentUser({ email, name, _id: res._id });
-          setLoggedIn(true);
+          // setLoggedIn(true);
           setErrorMessage('');
           navigate('/movies');
         });
       })
       .catch((error) => {
-        console.error('handleRegister ', error)
+        console.error('handleRegister ', error);
         setErrorMessage('Неверный логин или пароль');
-    });
+      });
   };
 
   const handleLogin = (email, password) => {
@@ -65,7 +65,7 @@ function App() {
           email: data.user.email,
         });
         setErrorMessage('');
-        setLoggedIn(true)
+        // setLoggedIn(true)
         navigate('/movies');
       })
       .catch((error) => {
@@ -133,23 +133,23 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route
-              path="/movies"
+              path="/api/movies"
               element={<ProtectedRoute component={<Movies />} />}
             />
             <Route
-              path="/saved-movies"
+              path="/api/saved-movies"
               element={<ProtectedRoute component={<SavedMovies />} />}
             />
             <Route
-              path="/profile"
+              path="/api/profile"
               element={<ProtectedRoute component={<Profile />} />}
             />
             <Route
-              path="/signup"
+              path="/api/signup"
               element={<Register handleRegister={handleRegister} />}
             />
             <Route
-              path="/signin"
+              path="/api/signin"
               element={<Login handleLogin={handleLogin} />}
             />
             <Route path="*" element={<ErrorPage />} />
