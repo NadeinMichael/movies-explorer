@@ -133,23 +133,23 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route
-              path="/api/movies"
+              path="/movies"
               element={<ProtectedRoute component={<Movies />} />}
             />
             <Route
-              path="/api/saved-movies"
+              path="/saved-movies"
               element={<ProtectedRoute component={<SavedMovies />} />}
             />
             <Route
-              path="/api/profile"
+              path="/profile"
               element={<ProtectedRoute component={<Profile />} />}
             />
             <Route
-              path="/api/signup"
+              path="/signup"
               element={<Register handleRegister={handleRegister} />}
             />
             <Route
-              path="/api/signin"
+              path="/signin"
               element={<Login handleLogin={handleLogin} />}
             />
             <Route path="*" element={<ErrorPage />} />
