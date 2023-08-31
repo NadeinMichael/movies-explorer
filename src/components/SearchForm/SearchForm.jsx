@@ -17,7 +17,6 @@ const SearchForm = ({
   setRowMovieList,
   favoriteMoviesList,
   setIsLoading,
-  getFavoriteMovies,
 }) => {
   const location = useLocation();
   const [isEmptyInput, setIsEmptyInput] = useState(false);
@@ -51,7 +50,6 @@ const SearchForm = ({
       setIsEmptyInput(false);
       getMovies()
         .then((res) => {
-          getFavoriteMovies();
           localStorage.setItem('rowMovies', JSON.stringify(res));
           setRowMovieList(res);
           localStorage.setItem('searchText', searchText);

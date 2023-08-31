@@ -98,14 +98,16 @@ function App() {
     }
   };
 
-  const getFavoriteMovies = () => {
-    mainApi
-      .getFavoriteMovies()
-      .then((res) => {
-        setFavoriteMoviesList(res);
-      })
-      .catch((err) => console.error('getFavoriteMovies', err));
-  };
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getFavoriteMovies()
+        .then((res) => {
+          setFavoriteMoviesList(res);
+        })
+        .catch((err) => console.error('getFavoriteMovies', err));
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
     checkToken();
@@ -128,7 +130,6 @@ function App() {
         setIsLoading,
         favoriteMoviesList,
         setFavoriteMoviesList,
-        getFavoriteMovies,
       }}
     >
       <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
