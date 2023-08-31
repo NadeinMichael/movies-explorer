@@ -26,6 +26,7 @@ function App() {
   const [favoriteMoviesList, setFavoriteMoviesList] = useState([]); // список сохраненных фильмов
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
+  const [firstEnter, setFirstEnter] = useState(false);
 
   console.log(favoriteMoviesList);
 
@@ -43,7 +44,6 @@ function App() {
         mainApi.authorize(email, password).then((data) => {
           localStorage.setItem('token', data.token);
           setCurrentUser({ email, name, _id: res._id });
-          // setLoggedIn(true);
           setErrorMessage('');
           navigate('/movies');
         });
@@ -65,8 +65,7 @@ function App() {
           email: data.user.email,
         });
         setErrorMessage('');
-        // setLoggedIn(true)
-        navigate('/movies');
+        setFirstEnter(true);
       })
       .catch((error) => {
         console.error('handleLogin ', error);
@@ -80,17 +79,19 @@ function App() {
       mainApi
         .checkJwt(token)
         .then((data) => {
-          if (data) {
-            setCurrentUser({
-              name: data.name,
-              email: data.email,
-              _id: data._id,
-            });
-            setLoggedIn(true);
-            navigate(location.pathname);
-            return;
+          setCurrentUser({
+            name: data.name,
+            email: data.email,
+            _id: data._id,
+          });
+        })
+        .then(() => {
+          setLoggedIn(true);
+          if (firstEnter) {
+            navigate('/movies');
+            setFirstEnter(false);
           } else {
-            return setLoggedIn(false);
+            navigate(location.pathname);
           }
         })
         .catch((err) => console.log('check Token error:', err));
@@ -100,15 +101,7 @@ function App() {
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi.getFavoriteMovies().then((res) => {
-        setFavoriteMoviesList(res);
-      });
-    }
-  }, [loggedIn]);
+  }, [firstEnter, loggedIn]);
 
   return (
     <AppContext.Provider
