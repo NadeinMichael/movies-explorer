@@ -8,18 +8,16 @@ import AuthorizedHeaderMenu from '../AuthorizedHeaderMenu/AuthorizedHeaderMenu';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import mainApi from '../../utils/MainApi';
 
 const Movies = () => {
   const {
     isLoading,
-    loggedIn,
     setIsLoading,
     rowMovieList,
     setRowMovieList,
     filteredMovieList,
     setFilteredMovieList,
-    setFavoriteMoviesList,
+    getFavoriteMovies,
   } = useContext(AppContext);
   const [searchText, setSearchText] = useState(
     localStorage.getItem('searchText') || ''
@@ -29,17 +27,6 @@ const Movies = () => {
   );
   const filteredMoviesFromStore =
     JSON.parse(localStorage.getItem('filteredMovies')) || [];
-
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .getFavoriteMovies()
-        .then((res) => {
-          setFavoriteMoviesList(res);
-        })
-        .catch((err) => console.error('getFavoriteMovies', err));
-    }
-  }, [loggedIn]);
 
   useEffect(() => {
     const queryText = searchText.trim().toLowerCase();
@@ -75,6 +62,7 @@ const Movies = () => {
         rowMovieList={rowMovieList}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
+        getFavoriteMovies={getFavoriteMovies}
       />
       <MoviesCardList searchText={searchText} cards={filteredMoviesFromStore} />
       <Footer />

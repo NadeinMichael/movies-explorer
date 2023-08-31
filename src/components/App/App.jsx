@@ -98,6 +98,15 @@ function App() {
     }
   };
 
+  const getFavoriteMovies = () => {
+    mainApi
+      .getFavoriteMovies()
+      .then((res) => {
+        setFavoriteMoviesList(res);
+      })
+      .catch((err) => console.error('getFavoriteMovies', err));
+  };
+
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,6 +128,7 @@ function App() {
         setIsLoading,
         favoriteMoviesList,
         setFavoriteMoviesList,
+        getFavoriteMovies,
       }}
     >
       <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
