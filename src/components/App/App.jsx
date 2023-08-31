@@ -75,31 +75,33 @@ function App() {
 
   const checkToken = () => {
     const token = localStorage.getItem('token');
-    mainApi
-      .checkJwt(token)
-      .then((data) => {
-        setCurrentUser({
-          name: data.name,
-          email: data.email,
-          _id: data._id,
-        });
-      })
-      .then(() => {
-        setLoggedIn(true);
-        if (firstEnter) {
-          navigate('/movies');
-          setFirstEnter(false);
-        } else {
-          navigate(location.pathname);
-        }
-      })
-      .catch((err) => console.log('check Token error:', err));
+    if (token) {
+      mainApi
+        .checkJwt(token)
+        .then((data) => {
+          setCurrentUser({
+            name: data.name,
+            email: data.email,
+            _id: data._id,
+          });
+        })
+        .then(() => {
+          setLoggedIn(true);
+          if (firstEnter) {
+            navigate('/movies');
+            setFirstEnter(false);
+          } else {
+            navigate(location.pathname);
+          }
+        })
+        .catch((err) => console.log('check Token error:', err));
+    }
   };
 
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [firstEnter, loggedIn]);
 
   return (
     <AppContext.Provider
