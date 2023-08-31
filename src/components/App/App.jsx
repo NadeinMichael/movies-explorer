@@ -110,7 +110,7 @@ function App() {
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [firstEnter]);
 
   return (
     <AppContext.Provider
