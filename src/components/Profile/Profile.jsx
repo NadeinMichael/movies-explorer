@@ -69,6 +69,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    setSuccessfulMessage('');
+    setErrorMessage('');
+  },[])
+
+  useEffect(() => {
     reset({
       name: currentUser.name,
       email: currentUser.email,
