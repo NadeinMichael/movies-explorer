@@ -28,8 +28,6 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [firstEnter, setFirstEnter] = useState(false);
 
-  console.log(favoriteMoviesList);
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -41,12 +39,7 @@ function App() {
     mainApi
       .register(name, email, password)
       .then((res) => {
-        mainApi.authorize(email, password).then((data) => {
-          localStorage.setItem('token', data.token);
-          setCurrentUser({ email, name, _id: res._id });
-          setErrorMessage('');
-          navigate('/movies');
-        });
+        handleLogin(email, password);
       })
       .catch((error) => {
         console.error('handleRegister ', error);

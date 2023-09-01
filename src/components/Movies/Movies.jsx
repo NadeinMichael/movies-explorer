@@ -18,6 +18,7 @@ const Movies = () => {
     filteredMovieList,
     setFilteredMovieList,
     getFavoriteMovies,
+    foundMovies,
   } = useContext(AppContext);
   const [searchText, setSearchText] = useState(
     localStorage.getItem('searchText') || ''
@@ -28,23 +29,28 @@ const Movies = () => {
   const filteredMoviesFromStore =
     JSON.parse(localStorage.getItem('filteredMovies')) || [];
 
-  useEffect(() => {
-    const queryText = searchText.trim().toLowerCase();
-    if (queryText) {
-      let filteredFilms = rowMovieList.filter(
-        (movie) =>
-          movie.nameRU.toLowerCase().includes(queryText) ||
-          movie.nameEN.toLowerCase().includes(queryText)
-      );
-      if (shortFilmsOnly) {
-        filteredFilms = filteredFilms.filter((movie) => movie.duration <= 40);
-      }
+  const [isRequest, setIsRequest] = useState(false);
 
-      setFilteredMovieList(filteredFilms);
-      localStorage.setItem('filteredMovies', JSON.stringify(filteredFilms));
+  useEffect(() => {
+    if (isRequest) {
+      const queryText = searchText.trim().toLowerCase();
+      if (queryText) {
+        let filteredFilms = rowMovieList.filter(
+          (movie) =>
+            movie.nameRU.toLowerCase().includes(queryText) ||
+            movie.nameEN.toLowerCase().includes(queryText)
+        );
+        if (shortFilmsOnly) {
+          filteredFilms = filteredFilms.filter((movie) => movie.duration <= 40);
+        }
+        setFilteredMovieList(filteredFilms);
+        localStorage.setItem('filteredMovies', JSON.stringify(filteredFilms));
+      }
+      setIsRequest(false);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shortFilmsOnly, rowMovieList]);
+  }, [shortFilmsOnly, foundMovies, isRequest]);
 
   return (
     <div className="movies">
@@ -63,6 +69,7 @@ const Movies = () => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         getFavoriteMovies={getFavoriteMovies}
+        setIsRequest={setIsRequest}
       />
       <MoviesCardList searchText={searchText} cards={filteredMoviesFromStore} />
       <Footer />

@@ -45,7 +45,7 @@ const SavedMovies = () => {
         setFavoriteSavedMovies={setFavoriteSavedMovies}
         favoriteMoviesList={favoriteMoviesList}
       />
-      <MoviesCardList cards={favoriteSavedMovies} />
+      <MoviesCardList cards={favoriteSavedMovies} searchText={searchTextSave} />
       <Footer />
     </div>
   );

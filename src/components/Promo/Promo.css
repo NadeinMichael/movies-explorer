@@ -43,6 +43,7 @@
   padding: 10px 20px;
   border-radius: 3px;
   border: 1px solid rgba(255, 255, 255, 0.6);
+  scroll-behavior: smooth;
 }
 
 @media all and (max-width: 850px) {

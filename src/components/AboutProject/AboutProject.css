@@ -1,5 +1,6 @@
 .about-project {
   padding: 110px 0 100px;
+  scroll-behavior: smooth;
 }
 
 .about-project__info {

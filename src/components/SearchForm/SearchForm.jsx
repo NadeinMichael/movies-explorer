@@ -17,6 +17,7 @@ const SearchForm = ({
   setRowMovieList,
   favoriteMoviesList,
   setIsLoading,
+  setIsRequest,
 }) => {
   const location = useLocation();
   const [isEmptyInput, setIsEmptyInput] = useState(false);
@@ -48,17 +49,24 @@ const SearchForm = ({
     } else {
       setIsLoading(true);
       setIsEmptyInput(false);
-      getMovies()
-        .then((res) => {
-          localStorage.setItem('rowMovies', JSON.stringify(res));
-          setRowMovieList(res);
-          localStorage.setItem('searchText', searchText);
-        })
-        .catch((err) => {
-          alert('Произошла ошибка на сервере, повторите запрос');
-          console.log(err);
-        })
-        .finally(() => setIsLoading(false));
+      if (localStorage.getItem('rowMovies')) {
+        setIsLoading(false);
+        setIsRequest(true);
+        localStorage.setItem('searchText', searchText);
+      } else {
+        getMovies()
+          .then((res) => {
+            localStorage.setItem('rowMovies', JSON.stringify(res));
+            setRowMovieList(res);
+            localStorage.setItem('searchText', searchText);
+            setIsRequest(true);
+          })
+          .catch((err) => {
+            alert('Произошла ошибка на сервере, повторите запрос');
+            console.log(err);
+          })
+          .finally(() => setIsLoading(false));
+      }
     }
   };
 

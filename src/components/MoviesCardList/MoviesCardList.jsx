@@ -48,7 +48,10 @@ const MoviesCardList = ({ searchText, cards }) => {
         {isLoading && <Loader />}
         {location.pathname === '/movies' && rowMovieList.length === 0 ? (
           <p className="movie-card-list__message">Найдите свой фильм</p>
-        ) : filteredMovieList.length === 0 && searchText?.trim().length ? (
+        ) : (filteredMovieList.length === 0 && searchText?.trim().length) ||
+          (location.pathname === '/saved-movies' &&
+            cards.length === 0 &&
+            searchText?.trim().length) ? (
           <p className="movie-card-list__message">
             По данному запросу ничего не найдено
           </p>
