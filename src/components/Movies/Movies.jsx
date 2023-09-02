@@ -11,25 +11,21 @@ import Footer from '../Footer/Footer';
 
 const Movies = () => {
   const {
-    isLoading,
-    setIsLoading,
     rowMovieList,
     setRowMovieList,
     filteredMovieList,
     setFilteredMovieList,
     getFavoriteMovies,
-    foundMovies,
+    isRequest,
+    setIsRequest,
+    searchText,
+    setSearchText,
+    filteredMoviesFromStore,
   } = useContext(AppContext);
-  const [searchText, setSearchText] = useState(
-    localStorage.getItem('searchText') || ''
-  );
+
   const [shortFilmsOnly, setShortFilmsOnly] = useState(
     JSON.parse(localStorage.getItem('shortFilmsOnly')) || false
   );
-  const filteredMoviesFromStore =
-    JSON.parse(localStorage.getItem('filteredMovies')) || [];
-
-  const [isRequest, setIsRequest] = useState(false);
 
   useEffect(() => {
     if (isRequest) {
@@ -48,9 +44,8 @@ const Movies = () => {
       }
       setIsRequest(false);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shortFilmsOnly, foundMovies, isRequest]);
+  }, [shortFilmsOnly, rowMovieList, isRequest]);
 
   return (
     <div className="movies">
@@ -66,8 +61,6 @@ const Movies = () => {
         filteredMovieList={filteredMovieList}
         setFilteredMovieList={setFilteredMovieList}
         rowMovieList={rowMovieList}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
         getFavoriteMovies={getFavoriteMovies}
         setIsRequest={setIsRequest}
       />

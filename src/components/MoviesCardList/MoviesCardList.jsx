@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import './MoviesCardList.css';
@@ -6,13 +6,15 @@ import AppContext from '../../contexts/AppContext';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Loader from '../Loader/Loader';
 import { useMediaQuery } from '../../hooks/useMediaQuerry';
-
-const LG_INITIAL_CARD_COUNT = 12;
-const MD_INITIAL_CARD_COUNT = 8;
-const SM_INITIAL_CARD_COUNT = 5;
+import {
+  LG_INITIAL_CARD_COUNT,
+  MD_INITIAL_CARD_COUNT,
+  SM_INITIAL_CARD_COUNT,
+} from '../../constants';
 
 const MoviesCardList = ({ searchText, cards }) => {
-  const { isLoading, rowMovieList, filteredMovieList } = useContext(AppContext);
+  console.log(cards);
+  const { isLoading, rowMovieList } = useContext(AppContext);
   const location = useLocation();
 
   const isDesktop = useMediaQuery('(min-width: 1280px)');
@@ -48,7 +50,7 @@ const MoviesCardList = ({ searchText, cards }) => {
         {isLoading && <Loader />}
         {location.pathname === '/movies' && rowMovieList.length === 0 ? (
           <p className="movie-card-list__message">Найдите свой фильм</p>
-        ) : (filteredMovieList.length === 0 && searchText?.trim().length) ||
+        ) : (cards.length === 0 && searchText?.trim().length) ||
           (location.pathname === '/saved-movies' &&
             cards.length === 0 &&
             searchText?.trim().length) ? (

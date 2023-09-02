@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -7,7 +7,7 @@ import logo from '../../images/logo.svg';
 import AppContext from '../../contexts/AppContext';
 
 const Login = ({ handleLogin }) => {
-  const {errorMessage} = useContext(AppContext)
+  const { errorMessage, setErrorMessage } = useContext(AppContext);
   const {
     register,
     formState: { errors, isValid },
@@ -16,9 +16,12 @@ const Login = ({ handleLogin }) => {
   } = useForm({ mode: 'onChange' });
 
   function onSubmit({ email, password }) {
-    handleLogin(email, password);
-    reset();
+    handleLogin(email, password, reset);
   }
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, []);
 
   return (
     <div className="login">
@@ -75,7 +78,7 @@ const Login = ({ handleLogin }) => {
             {errors?.password && (errors?.password?.message || 'error')}
           </span>
           <div className="login__button-container">
-          <p className='login__error-message'>{errorMessage}</p>
+            <p className="login__error-message">{errorMessage}</p>
             <button
               className="login__button form__button button"
               type="submit"

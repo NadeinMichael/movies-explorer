@@ -14,7 +14,7 @@ const SavedMovies = () => {
   const [shortFilmsOnlySave, setShortFilmsOnlySave] = useState(
     JSON.parse(localStorage.getItem('shortFilmsOnlySave')) || false
   );
-  const { favoriteMoviesList } = useContext(AppContext);
+  const { favoriteMoviesList, setIsRequest } = useContext(AppContext);
 
   const [favoriteSavedMovies, setFavoriteSavedMovies] =
     useState(favoriteMoviesList);
@@ -28,6 +28,8 @@ const SavedMovies = () => {
     } else {
       setFavoriteSavedMovies(favoriteMoviesList);
     }
+
+    setIsRequest(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shortFilmsOnlySave, favoriteMoviesList]);
 
@@ -44,6 +46,7 @@ const SavedMovies = () => {
         favoriteSavedMovies={favoriteSavedMovies}
         setFavoriteSavedMovies={setFavoriteSavedMovies}
         favoriteMoviesList={favoriteMoviesList}
+        setIsRequest={setIsRequest}
       />
       <MoviesCardList cards={favoriteSavedMovies} searchText={searchTextSave} />
       <Footer />

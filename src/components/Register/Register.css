@@ -1,10 +1,22 @@
 .register__button-container {
   width: 100%;
-  margin-top: 128px;
+  margin-top: 78px;
+}
+
+.register__error-message {
+  margin: 10px 0;
+  height: 30px;
+  text-align: center;
+
+  color: #ee3465;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 @media all and (max-width: 400px) {
   .register__button-container {
-    margin-top: 216px;
+    margin-top: 166px;
   }
 }

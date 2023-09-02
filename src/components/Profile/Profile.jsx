@@ -13,7 +13,7 @@ import mainApi from '../../utils/MainApi';
 const Profile = () => {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  const { setLoggedIn, setRowMovieList, setFavoriteMoviesList } =
+  const { setLoggedIn, setRowMovieList, setFavoriteMoviesList, setSearchText } =
     useContext(AppContext);
   const [editMode, setEditMode] = useState(false);
   const [successfulMessage, setSuccessfulMessage] = useState('');
@@ -58,6 +58,7 @@ const Profile = () => {
       _id: '',
     });
     setFavoriteMoviesList([]);
+    setSearchText('');
 
     navigate('/');
   };
@@ -71,7 +72,7 @@ const Profile = () => {
   useEffect(() => {
     setSuccessfulMessage('');
     setErrorMessage('');
-  },[])
+  }, []);
 
   useEffect(() => {
     reset({
@@ -94,8 +95,12 @@ const Profile = () => {
               <input
                 {...register('name', {
                   required: 'Обязательное поле',
-                  validate: (value,formValues) => {
-                    return ((value !== currentUser.name || formValues.email !== currentUser.email) || ' ')
+                  validate: (value, formValues) => {
+                    return (
+                      value !== currentUser.name ||
+                      formValues.email !== currentUser.email ||
+                      ' '
+                    );
                   },
                   minLength: {
                     value: 2,

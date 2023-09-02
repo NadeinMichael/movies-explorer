@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
-import { getMovies } from '../../utils/MoviesApi';
+import AppContext from '../../contexts/AppContext';
 
 const SearchForm = ({
   searchText,
@@ -14,13 +14,12 @@ const SearchForm = ({
   shortFilmsOnlySave,
   setShortFilmsOnlySave,
   setFavoriteSavedMovies,
-  setRowMovieList,
   favoriteMoviesList,
-  setIsLoading,
   setIsRequest,
 }) => {
   const location = useLocation();
-  const [isEmptyInput, setIsEmptyInput] = useState(false);
+  const { getAllMoviesFromApi, isEmptyInput, setIsEmptyInput } =
+    useContext(AppContext);
 
   const handleInputChange = (event) => {
     if (location.pathname === '/movies') {
@@ -31,42 +30,13 @@ const SearchForm = ({
   };
 
   const togglerShortFilms = (e) => {
+    setIsRequest(true);
     if (location.pathname === '/movies') {
       setShortFilmsOnly(e.target.checked);
       localStorage.setItem('shortFilmsOnly', e.target.checked);
     } else {
       setShortFilmsOnlySave(e.target.checked);
       localStorage.setItem('shortFilmsOnlySave', e.target.checked);
-    }
-  };
-
-  const getAllMoviesFromApi = (e) => {
-    e.preventDefault();
-    if (!searchText.trim().length) {
-      setIsEmptyInput(true);
-      setSearchText('');
-      return;
-    } else {
-      setIsLoading(true);
-      setIsEmptyInput(false);
-      if (localStorage.getItem('rowMovies')) {
-        setIsLoading(false);
-        setIsRequest(true);
-        localStorage.setItem('searchText', searchText);
-      } else {
-        getMovies()
-          .then((res) => {
-            localStorage.setItem('rowMovies', JSON.stringify(res));
-            setRowMovieList(res);
-            localStorage.setItem('searchText', searchText);
-            setIsRequest(true);
-          })
-          .catch((err) => {
-            alert('Произошла ошибка на сервере, повторите запрос');
-            console.log(err);
-          })
-          .finally(() => setIsLoading(false));
-      }
     }
   };
 

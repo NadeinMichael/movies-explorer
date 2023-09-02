@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useContext, useEffect } from 'react';
 
 import './Register.css';
 import logo from '../../images/logo.svg';
 
+import AppContext from '../../contexts/AppContext';
+
 const Register = ({ handleRegister }) => {
+  const { errorMessage, setErrorMessage } = useContext(AppContext);
   const {
     register,
     formState: { errors, isValid },
@@ -13,9 +17,12 @@ const Register = ({ handleRegister }) => {
   } = useForm({ mode: 'onChange' });
 
   function onSubmit({ name, email, password }) {
-    handleRegister(name, email, password);
-    reset();
+    handleRegister(name, email, password, reset);
   }
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, []);
 
   return (
     <div className="register">
@@ -94,6 +101,7 @@ const Register = ({ handleRegister }) => {
             {errors?.password && (errors?.password?.message || 'error')}
           </span>
           <div className="register__button-container">
+            <p className="register__error-message">{errorMessage}</p>
             <button
               className="register__button form__button button"
               type="submit"

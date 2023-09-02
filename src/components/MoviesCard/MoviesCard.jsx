@@ -4,67 +4,29 @@ import { useLocation, Link } from 'react-router-dom';
 import './MoviesCard.css';
 import AppContext from '../../contexts/AppContext';
 import { commonImageUrl } from '../../constants';
-import mainApi from '../../utils/MainApi';
 
 const MoviesCard = ({ card }) => {
-  const { favoriteMoviesList, setFavoriteMoviesList } = useContext(AppContext);
+  const { favoriteMoviesList, saveFavoriteMovie, removeFavoriteMovie } =
+    useContext(AppContext);
   const [isSaved, setIsSaved] = useState(false);
   const location = useLocation();
 
-  const FavoriteCard = favoriteMoviesList?.find(
+  const favoriteCard = favoriteMoviesList?.find(
     (movie) => movie.movieId === card.id || card._id
   );
 
   useEffect(() => {
-    if (FavoriteCard) {
+    if (favoriteCard) {
       setIsSaved(true);
     } else {
       setIsSaved(false);
     }
-  }, [favoriteMoviesList, FavoriteCard]);
+  }, [favoriteMoviesList, favoriteCard]);
 
   const formatDuration = (duration) => {
     const min = duration % 60;
     const hour = Math.floor(duration / 60);
     return hour ? `${hour}ч ${min}м` : `${min}м`;
-  };
-
-  const addFavoriteMovie = (card) => {
-    if (!FavoriteCard) {
-      mainApi
-        .addFavoriteMovie({
-          country: card.country,
-          director: card.director,
-          duration: card.duration,
-          year: card.year,
-          description: card.description,
-          image: 'https://api.nomoreparties.co' + card.image.url,
-          trailer: card.trailerLink,
-          thumbnail: 'https://api.nomoreparties.co' + card.image.url,
-          movieId: card.id,
-          nameRU: card.nameRU,
-          nameEN: card.nameEN,
-        })
-        .then((savedMovie) => {
-          const newFavoriteList = [savedMovie, ...favoriteMoviesList];
-          setFavoriteMoviesList(newFavoriteList);
-        })
-        .catch(console.error);
-    }
-  };
-
-  const deleteFavoriteMovie = (card) => {
-    if (FavoriteCard) {
-      mainApi
-        .deleteFavoriteMovie(card.id || card.movieId)
-        .then((deletedCard) => {
-          const newFavoriteList = favoriteMoviesList.filter(
-            (movie) => movie.movieId !== deletedCard.movieId
-          );
-          setFavoriteMoviesList(newFavoriteList);
-        })
-        .catch(console.error);
-    }
   };
 
   return (
@@ -87,7 +49,7 @@ const MoviesCard = ({ card }) => {
       {isSaved ? (
         (location.pathname === '/movies' && (
           <button
-            onClick={() => deleteFavoriteMovie(card)}
+            onClick={() => removeFavoriteMovie(card, favoriteCard)}
             className="movie-card__button movie-card__button_saved button"
           >
             ✔
@@ -96,14 +58,14 @@ const MoviesCard = ({ card }) => {
         (location.pathname === '/saved-movies' && (
           <button
             className="movie-card__button movie-card__button_delete button"
-            onClick={() => deleteFavoriteMovie(card)}
+            onClick={() => removeFavoriteMovie(card, favoriteCard)}
           >
             ✖
           </button>
         ))
       ) : (
         <button
-          onClick={() => addFavoriteMovie(card)}
+          onClick={() => saveFavoriteMovie(card, favoriteCard)}
           className="movie-card__button button"
         >
           Сохранить
