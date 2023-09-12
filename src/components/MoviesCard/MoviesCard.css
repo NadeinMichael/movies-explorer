@@ -1,6 +1,7 @@
 .movie-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 18px;
   padding: 18px 0;
 
@@ -29,6 +30,20 @@
   line-height: 18px;
 }
 
+.movie-card__img {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
+
+.movie-card__img-link {
+  transition: all 0.5s ease;
+}
+
+.movie-card__img-link:hover {
+  transform: scale(1.05);
+}
+
 .movie-card__button {
   font-size: 12px;
   font-weight: 400;
@@ -53,6 +68,12 @@
   font-size: 8px;
 }
 
+@media all and (max-width: 768px) {
+  .movie-card__img {
+    height: 190px;
+  }
+}
+
 @media all and (max-width: 700px) {
   .movie-card {
     padding: 14px 0;
@@ -65,6 +86,10 @@
 
   .movie-card__title {
     font-size: 12px;
+  }
+
+  .movie-card__img {
+    height: 168px;
   }
 
   .movie-card__duration {

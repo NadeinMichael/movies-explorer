@@ -28,6 +28,11 @@
   padding: 0;
 }
 
+.search-form__error {
+  display: block;
+  text-align: center;
+}
+
 .search-form__button {
   padding: 17px 28px;
   border: none;
@@ -41,7 +46,6 @@
 }
 
 .search-form__checkbox-container {
-  margin-top: 25px;
   padding-bottom: 44px;
   border-bottom: 1px solid rgba(170, 170, 170, 0.2);
 }
