@@ -53,6 +53,9 @@ function App() {
       .catch((error) => {
         console.error('handleRegister ', error);
         setErrorMessage('Неверный логин или пароль');
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -60,6 +63,7 @@ function App() {
     mainApi
       .authorize(email, password)
       .then((data) => {
+        setIsLoading(true);
         localStorage.setItem('token', data.token);
         setCurrentUser({
           ...currentUser,
@@ -73,6 +77,9 @@ function App() {
       .catch((error) => {
         console.error('handleLogin ', error);
         setErrorMessage('Неверный логин или пароль');
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 

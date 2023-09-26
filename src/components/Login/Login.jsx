@@ -7,7 +7,7 @@ import logo from '../../images/logo.svg';
 import AppContext from '../../contexts/AppContext';
 
 const Login = ({ handleLogin }) => {
-  const { errorMessage, setErrorMessage } = useContext(AppContext);
+  const { errorMessage, setErrorMessage, isLoading } = useContext(AppContext);
   const {
     register,
     formState: { errors, isValid },
@@ -83,7 +83,7 @@ const Login = ({ handleLogin }) => {
             <button
               className='login__button form__button button'
               type='submit'
-              disabled={!isValid}
+              disabled={!isValid || isLoading}
             >
               Войти
             </button>
