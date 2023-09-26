@@ -43,6 +43,10 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   const handleRegister = (name, email, password, reset) => {
     setIsLoading(true);
     mainApi
@@ -202,6 +206,7 @@ function App() {
         setErrorMessage,
         setLoggedIn,
         isOpen,
+        closeMenu,
         handleBurgerMenuClick,
         rowMovieList,
         setRowMovieList,

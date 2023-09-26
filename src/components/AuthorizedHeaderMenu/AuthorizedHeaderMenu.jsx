@@ -8,7 +8,7 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 const AuthorizedHeaderMenu = () => {
   const location = useLocation();
-  const { isOpen, handleBurgerMenuClick } = useContext(AppContext);
+  const { isOpen, closeMenu } = useContext(AppContext);
 
   return (
     <>
@@ -26,7 +26,7 @@ const AuthorizedHeaderMenu = () => {
               : 'header__item header__item-main'
           }
         >
-          <Link className="header__menu-link link" to="/">
+          <Link className='header__menu-link link' to='/' onClick={closeMenu}>
             Главная
           </Link>
         </li>
@@ -37,7 +37,11 @@ const AuthorizedHeaderMenu = () => {
               : 'header__item'
           }
         >
-          <Link className="header__menu-link link" to="/movies">
+          <Link
+            className='header__menu-link link'
+            to='/movies'
+            onClick={closeMenu}
+          >
             Фильмы
           </Link>
         </li>
@@ -48,7 +52,11 @@ const AuthorizedHeaderMenu = () => {
               : 'header__item'
           }
         >
-          <Link className="header__menu-link link" to="/saved-movies">
+          <Link
+            className='header__menu-link link'
+            to='/saved-movies'
+            onClick={closeMenu}
+          >
             Сохранённые фильмы
           </Link>
         </li>
@@ -60,8 +68,9 @@ const AuthorizedHeaderMenu = () => {
           }
         >
           <Link
-            className="header__menu-link header__menu-link_type_profile link"
-            to="/profile"
+            className='header__menu-link header__menu-link_type_profile link'
+            to='/profile'
+            onClick={closeMenu}
           >
             Аккаунт
           </Link>
@@ -69,7 +78,7 @@ const AuthorizedHeaderMenu = () => {
       </ul>
       <BurgerMenu />
       <div
-        onClick={handleBurgerMenuClick}
+        onClick={closeMenu}
         className={isOpen ? 'overlay' : 'overlay overlay_close'}
       ></div>
     </>
