@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import './Login.css';
 import logo from '../../images/logo.svg';
 import AppContext from '../../contexts/AppContext';
+import Loader from '../Loader/Loader';
 
 const Login = ({ handleLogin }) => {
   const { errorMessage, setErrorMessage, isLoading } = useContext(AppContext);
@@ -35,6 +36,7 @@ const Login = ({ handleLogin }) => {
           />
         </Link>
         <h1 className='login__title form__title'>Рады видеть!</h1>
+        {isLoading && <Loader />}
         <form className='login__form form' onSubmit={handleSubmit(onSubmit)}>
           <label className='login__label form__label' htmlFor='email'>
             E-mail

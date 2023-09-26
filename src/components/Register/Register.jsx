@@ -6,6 +6,7 @@ import './Register.css';
 import logo from '../../images/logo.svg';
 
 import AppContext from '../../contexts/AppContext';
+import Loader from '../Loader/Loader';
 
 const Register = ({ handleRegister }) => {
   const { errorMessage, setErrorMessage, isLoading } = useContext(AppContext);
@@ -36,6 +37,7 @@ const Register = ({ handleRegister }) => {
           />
         </Link>
         <h1 className='register__title form__title'>Добро пожаловать!</h1>
+        {isLoading && <Loader />}
         <form className='register__form form' onSubmit={handleSubmit(onSubmit)}>
           <label className='register__label form__label' htmlFor='name'>
             Имя

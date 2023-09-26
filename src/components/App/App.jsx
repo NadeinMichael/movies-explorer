@@ -44,6 +44,7 @@ function App() {
   };
 
   const handleRegister = (name, email, password, reset) => {
+    setIsLoading(true);
     mainApi
       .register(name, email, password)
       .then(() => {
@@ -60,10 +61,10 @@ function App() {
   };
 
   const handleLogin = (email, password, reset) => {
+    setIsLoading(true);
     mainApi
       .authorize(email, password)
       .then((data) => {
-        setIsLoading(true);
         localStorage.setItem('token', data.token);
         setCurrentUser({
           ...currentUser,
