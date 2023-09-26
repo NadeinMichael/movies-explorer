@@ -30,34 +30,34 @@ const MoviesCard = ({ card }) => {
   };
 
   return (
-    <li className="movie-card">
-      <div className="movie-card__info">
-        <h2 className="movie-card__title">{card.nameRU}</h2>
-        <p className="movie-card__duration">{formatDuration(card.duration)}</p>
+    <li className='movie-card'>
+      <div className='movie-card__info'>
+        <h2 className='movie-card__title'>{card.nameRU}</h2>
+        <p className='movie-card__duration'>{formatDuration(card.duration)}</p>
       </div>
       <Link
-        className="movie-card__img-link"
+        className='movie-card__img-link'
         to={card.trailerLink}
-        target="_blank"
+        target='_blank'
       >
         <img
-          className="movie-card__img"
+          className='movie-card__img'
           src={card.image.url ? commonImageUrl + card.image.url : card.image}
-          alt="изображение фильма"
+          alt='изображение фильма'
         />
       </Link>
       {isSaved ? (
         (location.pathname === '/movies' && (
           <button
             onClick={() => removeFavoriteMovie(card, favoriteCard)}
-            className="movie-card__button movie-card__button_saved button"
+            className='movie-card__button movie-card__button_saved button'
           >
             ✔
           </button>
         )) ||
         (location.pathname === '/saved-movies' && (
           <button
-            className="movie-card__button movie-card__button_delete button"
+            className='movie-card__button movie-card__button_delete button'
             onClick={() => removeFavoriteMovie(card, favoriteCard)}
           >
             ✖
@@ -66,7 +66,7 @@ const MoviesCard = ({ card }) => {
       ) : (
         <button
           onClick={() => saveFavoriteMovie(card, favoriteCard)}
-          className="movie-card__button button"
+          className='movie-card__button button'
         >
           Сохранить
         </button>

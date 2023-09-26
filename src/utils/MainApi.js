@@ -92,7 +92,7 @@ class Api {
 }
 
 const mainApi = new Api({
-  baseUrl: `https://tolmachev.diploma.nomoreparties.sbs/api`,
+  baseUrl: `https://movies-explorer-api-nadein.onrender.com/api`,
 });
 
 export default mainApi;

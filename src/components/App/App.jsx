@@ -217,32 +217,32 @@ function App() {
       <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
         <div className={isOpen ? 'app open-menu' : 'app'}>
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path='/' element={<Main />} />
             <Route
-              path="/movies"
+              path='/movies'
               element={<ProtectedRoute component={<Movies />} />}
             />
             <Route
-              path="/saved-movies"
+              path='/saved-movies'
               element={<ProtectedRoute component={<SavedMovies />} />}
             />
             <Route
-              path="/profile"
+              path='/profile'
               element={<ProtectedRoute component={<Profile />} />}
             />
             {!loggedIn && (
               <Route
-                path="/signup"
+                path='/signup'
                 element={<Register handleRegister={handleRegister} />}
               />
             )}
             {!loggedIn && (
               <Route
-                path="/signin"
+                path='/signin'
                 element={<Login handleLogin={handleLogin} />}
               />
             )}
-            <Route path="*" element={<ErrorPage loggedIn={loggedIn} />} />
+            <Route path='*' element={<ErrorPage loggedIn={loggedIn} />} />
           </Routes>
         </div>
       </CurrentUserContext.Provider>

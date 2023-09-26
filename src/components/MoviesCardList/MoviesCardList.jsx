@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import './MoviesCardList.css';
@@ -45,20 +45,20 @@ const MoviesCardList = ({ searchText, cards }) => {
   };
 
   return (
-    <div className="movie-card-list">
-      <div className="movie-card-list__container container">
+    <div className='movie-card-list'>
+      <div className='movie-card-list__container container'>
         {isLoading && <Loader />}
         {location.pathname === '/movies' && rowMovieList.length === 0 ? (
-          <p className="movie-card-list__message">Найдите свой фильм</p>
+          <p className='movie-card-list__message'>Найдите свой фильм</p>
         ) : (cards.length === 0 && searchText?.trim().length) ||
           (location.pathname === '/saved-movies' &&
             cards.length === 0 &&
             searchText?.trim().length) ? (
-          <p className="movie-card-list__message">
+          <p className='movie-card-list__message'>
             По данному запросу ничего не найдено
           </p>
         ) : (
-          <ul className="movie-card-list__cards">
+          <ul className='movie-card-list__cards'>
             {cards?.slice(0, visibleCardCount).map((card) => (
               <MoviesCard card={card} key={card.id || card._id} />
             ))}
@@ -74,7 +74,7 @@ const MoviesCardList = ({ searchText, cards }) => {
         >
           {cards.length > visibleCardCount ? (
             <button
-              className="movie-card-list__button button"
+              className='movie-card-list__button button'
               onClick={handleClick}
             >
               Ещё
